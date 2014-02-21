@@ -1,3 +1,4 @@
+Gemfile.lock
 *.gem
 *.rbc
 .bundle
@@ -16,3 +17,10 @@ tmp
 .yardoc
 _yardoc
 doc/
+
+# Editor files
+.*.sw*
+*~
+
+# OS Files
+.DS_Store
