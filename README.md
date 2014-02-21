@@ -57,6 +57,6 @@ end
 
 Copyright (C) 2014 The Adhearsion Foundation
 
-adhearsion-i18n is released under the [MIT license](http://opensource.org/licenses/MIT). Please see the [LICENSE](https://github.com/bklang/sippy_cup/blob/master/LICENSE) file for details.
+adhearsion-i18n is released under the [MIT license](http://opensource.org/licenses/MIT). Please see the [LICENSE](https://github.com/adhearsion/adhearsion-i18n/blob/master/LICENSE) file for details.
 
 adhearsion-i18n was created by [Ben Klang](https://twitter.com/bklang) with support from [Mojo Lingo](https://mojolingo.com) and their clients.
