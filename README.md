@@ -17,6 +17,14 @@ See `rake config:show` to see a full list of options.
 
 Make sure to create your locales in `config/locales` within your Adhearsion app.
 
+adhearsion-i18n uses the [i18n gem](https://github.com/svenfuchs/i18n).  For example, if you want to change the default locale, put something like this in config/adhearsion.rb:
+
+```Ruby
+I18n.default_locale = :de
+```
+
+More docs (though admittedly Rails-specific - read carefully) can be found at http://guides.rubyonrails.org/i18n.html
+
 ## Examples
 
 en.yml:
