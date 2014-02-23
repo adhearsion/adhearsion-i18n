@@ -6,7 +6,7 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
 
     config.locale_path.each do |dir|
       logger.debug "Adding #{dir} to the I18n load path"
-      I18n.load_path << "#{dir}/**/*.yml"
+      I18n.load_path += Dir["#{dir}/**/*.yml"]
     end
 
     logger.info "Adhearsion I18n loaded"
