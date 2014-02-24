@@ -7,9 +7,8 @@ describe AdhearsionI18n::CallControllerMethods do
   let(:call_id)     { SecureRandom.uuid }
   let(:call)        { Adhearsion::Call.new }
   let(:block)       { nil }
-  let(:controller)  { Class.new(Adhearsion::CallController).new call }
 
-  subject { controller }
+  subject(:controller) { Class.new(Adhearsion::CallController).new call }
 
   before :all do
     Adhearsion.config.i18n['locale_path'] = ["#{File.dirname(__FILE__)}/fixtures/locale"]
