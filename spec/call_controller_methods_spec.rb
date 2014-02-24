@@ -43,6 +43,8 @@ describe AdhearsionI18n::CallControllerMethods do
       controller.locale = 'it'
       ssml = controller.t :have_many_cats
       ssml['xml:lang'].should =~ /^it/
+      controller2 = Class.new(Adhearsion::CallController).new call
+      controller2.locale.should == 'it'
     end
 
     it 'should generate proper SSML with both audio and text fallback translations' do
