@@ -3,9 +3,9 @@
 module AdhearsionI18n::CallControllerMethods
   def t(key, options = {})
     this_locale = options[:locale] || locale
-    default_options = {default: '', locale: locale}
-    prompt = ::I18n.t "#{key}.audio", default_options.merge(options)
-    text   = ::I18n.t "#{key}.text", default_options.merge(options)
+    options = {default: '', locale: locale}.merge(options)
+    prompt = ::I18n.t "#{key}.audio", options
+    text   = ::I18n.t "#{key}.text", options
 
     unless prompt.empty?
       prompt = "#{config['audio_path']}/#{this_locale}/#{prompt}"
