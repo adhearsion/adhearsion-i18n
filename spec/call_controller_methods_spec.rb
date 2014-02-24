@@ -45,7 +45,7 @@ describe AdhearsionI18n::CallControllerMethods do
       ssml['xml:lang'].should =~ /^it/
     end
 
-    it 'should generate proper SSML with both audio and text translations' do
+    it 'should generate proper SSML with both audio and text fallback translations' do
       ssml = controller.t :have_many_cats
       ssml.should == RubySpeech::SSML.draw(language: 'en') do
         audio src: "/audio/en/have_many_cats.wav" do
