@@ -2,14 +2,15 @@
 
 module AdhearsionI18n::CallControllerMethods
   def t(key, options = {})
+    this_locale = options[:locale] || locale
     prompt = ::I18n.t "#{key}.audio", {default: '', locale: locale}.merge(options)
     text   = ::I18n.t "#{key}.text", {default: '', locale: locale}.merge(options)
 
     unless prompt.empty?
-      prompt = "#{config['audio_path']}/#{locale}/#{prompt}"
+      prompt = "#{config['audio_path']}/#{this_locale}/#{prompt}"
     end
 
-    RubySpeech::SSML.draw do
+    RubySpeech::SSML.draw language: this_locale do
       if prompt.empty?
         string text
       else

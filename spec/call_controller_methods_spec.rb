@@ -48,8 +48,7 @@ describe AdhearsionI18n::CallControllerMethods do
 
     it 'should generate proper SSML with both audio and text translations' do
       ssml = controller.t :have_many_cats
-      puts ssml.inspect
-      ssml.should == RubySpeech::SSML.draw do
+      ssml.should == RubySpeech::SSML.draw(language: 'en') do
         audio src: "/audio/en/have_many_cats.wav" do
           string 'I have quite a few cats'
         end
@@ -58,7 +57,7 @@ describe AdhearsionI18n::CallControllerMethods do
 
     it 'should generate proper SSML with only audio (no text) translations' do
       ssml = controller.t :my_shirt_is_white
-      ssml.should == RubySpeech::SSML.draw do
+      ssml.should == RubySpeech::SSML.draw(language: 'en') do
         audio src: "/audio/en/my_shirt_is_white.wav" do
           string ''
         end
@@ -67,14 +66,14 @@ describe AdhearsionI18n::CallControllerMethods do
 
     it 'should generate proper SSML with only text (no audio) translations' do
       ssml = controller.t :many_people_out_today
-      ssml.should == RubySpeech::SSML.draw do
+      ssml.should == RubySpeech::SSML.draw(language: 'en') do
         string 'There are many people out today'
       end
     end
 
     it 'should generate a path to the audio prompt based on the requested locale' do
       ssml = controller.t :my_shirt_is_white, locale: 'it'
-      ssml.should == RubySpeech::SSML.draw(language: 'it-IT') do
+      ssml.should == RubySpeech::SSML.draw(language: 'it') do
         audio src: "/audio/it/la_mia_camicia_e_bianca.wav" do
           string ''
         end
