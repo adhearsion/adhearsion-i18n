@@ -56,7 +56,7 @@ describe AdhearsionI18n::CallControllerMethods do
       end
     end
 
-    it 'should generate proper SSML with only audio (no text) translations' do
+    it 'should generate proper SSML with only audio (no fallback text) translations' do
       ssml = controller.t :my_shirt_is_white
       ssml.should == RubySpeech::SSML.draw(language: 'en') do
         audio src: "/audio/en/my_shirt_is_white.wav" do
