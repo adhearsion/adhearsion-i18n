@@ -59,7 +59,9 @@ describe AdhearsionI18n::CallControllerMethods do
     it 'should generate proper SSML with only audio (no text) translations' do
       ssml = controller.t :my_shirt_is_white
       ssml.should == RubySpeech::SSML.draw do
-        audio src: "/audio/en/my_shirt_is_white.wav"
+        audio src: "/audio/en/my_shirt_is_white.wav" do
+          string ''
+        end
       end
     end
 
@@ -73,7 +75,9 @@ describe AdhearsionI18n::CallControllerMethods do
     it 'should generate a path to the audio prompt based on the requested locale' do
       ssml = controller.t :my_shirt_is_white, locale: 'it'
       ssml.should == RubySpeech::SSML.draw(language: 'it-IT') do
-        audio src: "/audio/it/la_mia_camicia_e_bianca.wav"
+        audio src: "/audio/it/la_mia_camicia_e_bianca.wav" do
+          string ''
+        end
       end
     end
   end
