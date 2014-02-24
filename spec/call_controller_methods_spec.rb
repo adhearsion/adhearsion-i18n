@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe CallControllerMethods do
+describe AdhearsionI18n::CallControllerMethods do
   describe 'getting and setting the locale'
 
   describe 'requesting a translation' do
