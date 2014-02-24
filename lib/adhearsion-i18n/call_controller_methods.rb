@@ -1,9 +1,13 @@
 # encoding: utf-8
 
 module AdhearsionI18n::CallControllerMethods
-  def t(key)
-    prompt = ::I18n.t "#{key.to_s}.audio", default: ''
-    text   = ::I18n.t "#{key.to_s}.text"
+  def t(key, options)
+    prompt = ::I18n.t "#{key.to_s}.audio", {default: '', locale: call_locale}.merge(options)
+    text   = ::I18n.t "#{key.to_s}.text", {locale: call_locale}.merge(options)
+
+    unless prompt.empty?
+      prompt = "#{config['audio_path']}/#{call_locale}/#{prompt}"
+    end
 
     RubySpeech::SSML.draw do
       if prompt.empty?
@@ -12,5 +16,19 @@ module AdhearsionI18n::CallControllerMethods
         audio(src: prompt) { string text }
       end
     end
+  end
+
+  def locale
+    call[:locale] || I18n.default_locale
+  end
+
+  def locale=(l)
+    call[:locale] = l
+  end
+
+private
+
+  def config
+    Adhearsion.config.i18n
   end
 end
