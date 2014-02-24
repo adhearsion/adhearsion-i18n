@@ -2,11 +2,11 @@
 
 module AdhearsionI18n::CallControllerMethods
   def t(key, options)
-    prompt = ::I18n.t "#{key.to_s}.audio", {default: '', locale: call_locale}.merge(options)
-    text   = ::I18n.t "#{key.to_s}.text", {locale: call_locale}.merge(options)
+    prompt = ::I18n.t "#{key.to_s}.audio", {default: '', locale: locale}.merge(options)
+    text   = ::I18n.t "#{key.to_s}.text", {locale: locale}.merge(options)
 
     unless prompt.empty?
-      prompt = "#{config['audio_path']}/#{call_locale}/#{prompt}"
+      prompt = "#{config['audio_path']}/#{locale}/#{prompt}"
     end
 
     RubySpeech::SSML.draw do
