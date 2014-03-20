@@ -26,23 +26,22 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
     namespace :i18n do
       desc "Validate configured audio prompt files exist"
       task :validate_files do
-        ahn_root = "#{File.dirname(__FILE__)}/../.."
-        locales_dir = "#{ahn_root}/config/locales"
-        locales = Dir.glob("#{locales_dir}/*").map { |localedir| File.basename localedir }
-
-        audio_dir = "#{ahn_root}/audio"
+        locale_files = Dir.glob(I18n.load_path)
 
         locale_errors = {}
-        locales.each do |locale|
-          prompts = YAML.load File.read("#{locales_dir}/#{locale}/#{locale}.yml")
+        locale_files.each do |locale_file|
+          # We only support YAML for now
+          next unless locale_file =~ /\.ya?ml$/
+          prompts = YAML.load File.read(locale_file)
+
+          locale = prompts.keys.first
           prompts = prompts[locale]
-          unless prompts
-            puts "Unable to find locale data for #{locale}"
-            next
-          end
 
           prompts.each_pair do |key, mapping|
-            file = File.absolute_path "#{audio_dir}/#{locale}/#{mapping['audio']}"
+            # Not all prompts will have audio files
+            next unless mapping['audio']
+
+            file = File.absolute_path "#{config['audio_path']}/#{locale}/#{mapping['audio']}"
             unless File.exist?(file)
               puts "[#{locale}] Missing audio file: #{file}"
               locale_errors[locale] ||= 0
