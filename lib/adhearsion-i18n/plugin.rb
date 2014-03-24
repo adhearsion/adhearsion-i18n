@@ -44,7 +44,7 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
 
             file = File.absolute_path "#{config['audio_path']}/#{locale}/#{mapping['audio']}"
             unless File.exist?(file)
-              puts "[#{locale}] Missing audio file: #{file}"
+              logger.info "[#{locale}] Missing audio file: #{file}"
               locale_errors[locale] ||= 0
               locale_errors[locale] += 1
             end
@@ -52,12 +52,12 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
         end
 
         if locale_errors.keys.count > 0
-          puts "Errors detected! Number of errors by locale:"
+          logger.error "Errors detected! Number of errors by locale:"
           locale_errors.each_pair do |locale, err_count|
-            puts "[#{locale}]: #{err_count} missing prompts"
+            logger.error "[#{locale}]: #{err_count} missing prompts"
           end
         else
-          puts "All configured prompt files successfully validated."
+          logger.info "All configured prompt files successfully validated."
         end
       end
     end
