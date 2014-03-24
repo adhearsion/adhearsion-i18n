@@ -26,6 +26,7 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
     namespace :i18n do
       desc "Validate configured audio prompt files exist"
       task :validate_files do
+        config = Adhearsion.config.i18n
         locale_files = Dir.glob(I18n.load_path)
 
         locale_errors = {}
