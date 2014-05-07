@@ -80,5 +80,12 @@ describe AdhearsionI18n::CallControllerMethods do
         end
       end
     end
+
+    it 'should fall back to a text translation if the locale structure does not break out audio vs. tts' do
+      ssml = controller.t :seventeen, locale: 'it'
+      ssml.should == RubySpeech::SSML.draw(language: 'it') do
+        string 'diciassette'
+      end
+    end
   end
 end

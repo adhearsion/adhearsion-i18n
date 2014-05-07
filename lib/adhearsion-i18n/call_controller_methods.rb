@@ -7,6 +7,11 @@ module AdhearsionI18n::CallControllerMethods
     prompt = ::I18n.t "#{key}.audio", options
     text   = ::I18n.t "#{key}.text", options
 
+    if prompt.empty? && text.empty?
+      # Look for a translation key that doesn't follow the Adhearsion-I18n structure
+      text = ::I18n.t key, options
+    end
+
     unless prompt.empty?
       prompt = "#{config['audio_path']}/#{this_locale}/#{prompt}"
     end

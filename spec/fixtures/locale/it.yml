@@ -8,3 +8,6 @@ it:
 
   many_people_out_today:
     text: Ci sono molti persone fuori oggi
+
+  # Simulating an external, non adhearsion-i18n translation:
+  seventeen: diciassette
