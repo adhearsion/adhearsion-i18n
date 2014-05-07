@@ -1,4 +1,4 @@
-# develop
+# v0.0.3
 * [FEATURE] Add rake task to validate that all defined audio prompts are found within Adhearsion application
 * [FEATURE] Allow translation lookups to fallback if an adhearsion-i18n structure isn't found
 
