@@ -13,7 +13,7 @@ module AdhearsionI18n::CallControllerMethods
     end
 
     unless prompt.empty?
-      prompt = "#{config['audio_path']}/#{this_locale}/#{prompt}"
+      prompt = "#{Adhearsion.config.i18n.audio_path}/#{this_locale}/#{prompt}"
     end
 
     RubySpeech::SSML.draw language: this_locale do
@@ -32,10 +32,3 @@ module AdhearsionI18n::CallControllerMethods
   def locale=(l)
     call[:locale] = l
   end
-
-private
-
-  def config
-    Adhearsion.config.i18n
-  end
-end
