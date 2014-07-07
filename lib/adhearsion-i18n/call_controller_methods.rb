@@ -32,3 +32,4 @@ module AdhearsionI18n::CallControllerMethods
   def locale=(l)
     call[:locale] = l
   end
+end
