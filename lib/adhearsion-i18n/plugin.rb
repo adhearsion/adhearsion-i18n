@@ -39,12 +39,13 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
           prompts = prompts[locale]
 
           prompts.each_pair do |key, mapping|
+            logger.trace "Checking i18n key #{key}"
             # Not all prompts will have audio files
             next unless mapping['audio']
 
             file = File.absolute_path "#{config['audio_path']}/#{locale}/#{mapping['audio']}"
             unless File.exist?(file)
-              logger.info "[#{locale}] Missing audio file: #{file}"
+              logger.warn "[#{locale}] Missing audio file: #{file}"
               locale_errors[locale] ||= 0
               locale_errors[locale] += 1
             end
