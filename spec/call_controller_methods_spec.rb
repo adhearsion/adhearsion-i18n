@@ -12,12 +12,12 @@ describe AdhearsionI18n::CallControllerMethods do
 
   before :all do
     Adhearsion.config.i18n['locale_path'] = ["#{File.dirname(__FILE__)}/fixtures/locale"]
+    Adhearsion::Plugin.init_plugins
   end
 
   before do
     I18n.default_locale = :en
     double call, write_command: true, id: call_id
-    Adhearsion::Plugin.init_plugins
   end
 
   describe 'getting and setting the locale' do
