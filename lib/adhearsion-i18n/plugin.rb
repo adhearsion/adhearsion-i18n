@@ -17,7 +17,7 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
     locale_path ["#{Adhearsion.root}/config/locales"], transform: Proc.new { |v| v.split ':' }, desc: <<-__
       List of directories from which to load locale data, colon-delimited
     __
-    audio_path "#{Adhearsion.root}/audio", desc: <<-__
+    audio_path "file://#{Adhearsion.root}/audio", desc: <<-__
       Base path from which audio files can be found. May be a filesystem path or some other URL (like HTTP)
     __
   end

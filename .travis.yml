@@ -1,0 +1,18 @@
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1.0
+  - jruby
+  - rbx-2.1.1
+  - ruby-head
+jdk:
+  - openjdk7 # for jruby
+before_script: export JRUBY_OPTS="--server -J-Xss1024k -J-Xmx652m -J-XX:+UseConcMarkSweepGC"
+matrix:
+  allow_failures:
+    - rvm: rbx-2.1.1
+    - rvm: ruby-head
+env: RAILS_ENV=development AHN_ENV=development
+notifications:
+  irc: "irc.freenode.org#adhearsion"

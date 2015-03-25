@@ -1,3 +1,8 @@
+# develop
+
+# v1.0.0
+* [BUGFIX] More widely acceptable default base path (full file:// URL)
+
 # v0.0.4
 * [FEATURE] More appropriate log level output and check for empty/broken i18n locales
 
