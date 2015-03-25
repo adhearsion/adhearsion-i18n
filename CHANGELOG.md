@@ -1,4 +1,6 @@
 # develop
+
+# v1.0.0
 * [BUGFIX] More widely acceptable default base path (full file:// URL)
 
 # v0.0.4
