@@ -30,6 +30,7 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
         locale_files = Dir.glob(I18n.load_path)
 
         locale_errors = {}
+        checked_prompts = 0
         locale_files.each do |locale_file|
           # We only support YAML for now
           next unless locale_file =~ /\.ya?ml$/
@@ -39,25 +40,32 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
           prompts = prompts[locale]
 
           prompts.each_pair do |key, mapping|
+            logger.trace "Checking i18n key #{key}"
             # Not all prompts will have audio files
             next unless mapping['audio']
 
+
             file = File.absolute_path "#{config['audio_path']}/#{locale}/#{mapping['audio']}"
             unless File.exist?(file)
-              logger.info "[#{locale}] Missing audio file: #{file}"
+              logger.warn "[#{locale}] Missing audio file: #{file}"
               locale_errors[locale] ||= 0
               locale_errors[locale] += 1
             end
+            checked_prompts += 1
           end
         end
 
-        if locale_errors.keys.count > 0
-          logger.error "Errors detected! Number of errors by locale:"
-          locale_errors.each_pair do |locale, err_count|
-            logger.error "[#{locale}]: #{err_count} missing prompts"
-          end
+        if checked_prompts == 0
+          logger.warn "No adhearsion-i18n prompts found. No files checked."
         else
-          logger.info "All configured prompt files successfully validated."
+          if locale_errors.keys.count > 0
+            logger.error "Errors detected! Number of errors by locale:"
+            locale_errors.each_pair do |locale, err_count|
+              logger.error "[#{locale}]: #{err_count} missing prompts"
+            end
+          else
+            logger.info "All configured prompt files successfully validated."
+          end
         end
       end
     end
