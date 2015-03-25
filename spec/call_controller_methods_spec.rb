@@ -50,7 +50,7 @@ describe AdhearsionI18n::CallControllerMethods do
     it 'should generate proper SSML with both audio and text fallback translations' do
       ssml = controller.t :have_many_cats
       ssml.should == RubySpeech::SSML.draw(language: 'en') do
-        audio src: "/audio/en/have_many_cats.wav" do
+        audio src: "file:///audio/en/have_many_cats.wav" do
           string 'I have quite a few cats'
         end
       end
@@ -59,7 +59,7 @@ describe AdhearsionI18n::CallControllerMethods do
     it 'should generate proper SSML with only audio (no fallback text) translations' do
       ssml = controller.t :my_shirt_is_white
       ssml.should == RubySpeech::SSML.draw(language: 'en') do
-        audio src: "/audio/en/my_shirt_is_white.wav" do
+        audio src: "file:///audio/en/my_shirt_is_white.wav" do
           string ''
         end
       end
@@ -75,7 +75,7 @@ describe AdhearsionI18n::CallControllerMethods do
     it 'should generate a path to the audio prompt based on the requested locale' do
       ssml = controller.t :my_shirt_is_white, locale: 'it'
       ssml.should == RubySpeech::SSML.draw(language: 'it') do
-        audio src: "/audio/it/la_mia_camicia_e_bianca.wav" do
+        audio src: "file:///audio/it/la_mia_camicia_e_bianca.wav" do
           string ''
         end
       end
