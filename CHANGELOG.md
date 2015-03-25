@@ -1,4 +1,5 @@
 # develop
+  * Permit any 0.x version of i18n, particularly 0.7.0
 
 # v1.0.0
 * [BUGFIX] More widely acceptable default base path (full file:// URL)
