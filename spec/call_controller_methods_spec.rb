@@ -88,4 +88,32 @@ describe AdhearsionI18n::CallControllerMethods do
       end
     end
   end
+
+  describe 'with fallback disabled, requesting a translation' do
+    before do
+      Adhearsion.config.i18n.fallback = false
+      Adhearsion::Plugin.init_plugins
+    end
+
+    it 'should generate proper SSML with only audio (no text) translations' do
+      ssml = controller.t :my_shirt_is_white
+      ssml.should == RubySpeech::SSML.draw(language: 'en') do
+        audio src: "file:///audio/en/my_shirt_is_white.wav"
+      end
+    end
+
+    it 'should generate proper SSML with only text (no audio) translations' do
+      ssml = controller.t :many_people_out_today
+      ssml.should == RubySpeech::SSML.draw(language: 'en') do
+        string 'There are many people out today'
+      end
+    end
+
+    it 'should generate proper SSML with only audio translations when both are supplied' do
+      ssml = controller.t :have_many_cats
+      ssml.should == RubySpeech::SSML.draw(language: 'en') do
+        audio src: "file:///audio/en/have_many_cats.wav"
+      end
+    end
+  end
 end

@@ -20,6 +20,9 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
     audio_path "file://#{Adhearsion.root}/audio", desc: <<-__
       Base path from which audio files can be found. May be a filesystem path or some other URL (like HTTP)
     __
+    fallback true, desc: <<-__
+      Whether to include text for translations that provide both text & audio. True or false.
+    __
   end
 
   tasks do

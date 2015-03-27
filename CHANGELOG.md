@@ -1,5 +1,8 @@
 # develop
 
+# v1.1.0
+  * [FEATURE] Add fallback config option to disable text fallback when audio prompts exist.
+
 # v1.0.1
   * Permit any 0.x version of i18n, particularly 0.7.0
 

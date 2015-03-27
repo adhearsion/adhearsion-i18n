@@ -20,7 +20,11 @@ module AdhearsionI18n::CallControllerMethods
       if prompt.empty?
         string text
       else
-        audio(src: prompt) { string text }
+        if Adhearsion.config.i18n.fallback
+          audio(src: prompt) { string text }
+        else
+          audio(src: prompt)
+        end
       end
     end
   end
