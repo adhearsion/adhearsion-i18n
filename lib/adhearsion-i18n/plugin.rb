@@ -71,6 +71,37 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
           end
         end
       end
+
+      desc "Generate recording script (Markdown format)"
+      task :generate_script do
+        output_dir = File.join Adhearsion.root, 'doc'
+        File.mkdir output_dir unless File.exist? output_dir
+
+        locale_files = Dir.glob(I18n.load_path)
+        locale_files.each do |locale_file|
+          # We only support YAML for now
+          next unless locale_file =~ /\.ya?ml$/
+
+          prompts = YAML.load File.read(locale_file)
+
+          locale = prompts.keys.first
+          prompts = prompts[locale]
+
+          script_name = File.join output_dir, "#{locale}_script.md"
+          File.open script_name, 'w' do |fh|
+            prompts.each_pair do |key, mapping|
+              logger.trace "Checking i18n key #{key}"
+
+              # Ignore any prompt that doesn't have a text translation
+              next unless mapping['text']
+
+              fh.puts "* `#{key}.wav`: \"#{mapping['text']}\""
+              fh.puts
+            end
+          end
+          File.unlink script_name if File.zero? script_name
+        end
+      end
     end
   end
 end
