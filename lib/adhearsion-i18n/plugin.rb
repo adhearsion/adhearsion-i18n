@@ -42,7 +42,7 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
           locale = prompts.keys.first
           prompts = prompts[locale]
 
-          prompts.each_pair do |key, mapping|
+          each_prompt(prompts) do |key, mapping|
             logger.trace "Checking i18n key #{key}"
             # Not all prompts will have audio files
             next unless mapping['audio']
@@ -87,9 +87,9 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
           locale = prompts.keys.first
           prompts = prompts[locale]
 
-          script_name = File.join output_dir, "#{locale}_script.md"
+          script_name = File.join output_dir, "prompts_#{locale}.md"
           File.open script_name, 'w' do |fh|
-            prompts.each_pair do |key, mapping|
+            each_prompt(prompts) do |key, mapping|
               logger.trace "Checking i18n key #{key}"
 
               # Ignore any prompt that doesn't have a text translation
@@ -100,6 +100,24 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
             end
           end
           File.unlink script_name if File.zero? script_name
+        end
+      end
+
+      def children(node)
+        node.is_a?(Hash) && node.keys - ['text', 'audio'] || []
+      end
+
+      def prompt?(node)
+        node.is_a?(Hash) && (node.key?('text') || node.key?('audio'))
+      end
+
+      def each_prompt(collection, prefix = '', &block)
+        collection.each do |key, data|
+          next if ['text', 'audio'].include? key
+          current_prefix = prefix.empty? ? prefix : "#{prefix}."
+          current_prefix += key.to_s
+          each_prompt(data, current_prefix, &block) unless children(data).empty?
+          yield current_prefix, data if prompt? data
         end
       end
     end
