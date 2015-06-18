@@ -1,4 +1,6 @@
 # develop
+  * [FEATURE] Add rake task to generate Markdown formatted prompt list for recording
+  * [BUGFIX] Fix rake task that validates recording files to handle nested i18n keys
 
 # v1.1.0
   * [FEATURE] Add fallback config option to disable text fallback when audio prompts exist.
