@@ -3,6 +3,7 @@
 %w{
   version
   plugin
+  formatter
   call_controller_methods
 }.each { |r| require "adhearsion-i18n/#{r}" }
 
@@ -23,10 +24,10 @@ class AdhearsionI18n
       prompt = "#{Adhearsion.config.i18n.audio_path}/#{this_locale}/#{prompt}"
     end
 
-    RubySpeech::SSML.draw language: this_locale do
-      if prompt.empty?
-        string text
-      else
+    if prompt.empty?
+      output_formatter.ssml_for_text(text, language: this_locale)
+    else
+      RubySpeech::SSML.draw language: this_locale do
         if Adhearsion.config.i18n.fallback
           audio(src: prompt) { string text }
         else
@@ -40,4 +41,7 @@ class AdhearsionI18n
     I18n.locale || I18n.default_locale
   end
 
+  def self.output_formatter
+    AdhearsionI18n::Formatter.new
+  end
 end
