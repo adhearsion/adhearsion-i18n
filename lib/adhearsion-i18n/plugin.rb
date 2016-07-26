@@ -94,8 +94,9 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
 
               # Ignore any prompt that doesn't have a text translation
               next unless mapping['text']
+              audiofile = mapping['audio'] ? mapping['audio'] : "#{key}.wav"
 
-              fh.puts "* `#{key}.wav`: \"#{mapping['text']}\""
+              fh.puts "* `#{audiofile}`: \"#{mapping['text']}\""
               fh.puts
             end
           end
