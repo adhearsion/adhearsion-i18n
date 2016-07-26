@@ -61,6 +61,55 @@ class ExampleController < Adhearsion::CallController
 end
 ```
 
+Translations can also be used outside call controllers via `AdhearsionI18n.t`:
+
+en.yml:
+
+```yaml
+en:
+  order_recommendations:
+    new_customer:
+      text: Thank you for calling! Try today's special made just for you.
+      audio: recommendations/new_customer
+    returning_customer:
+      text: Welcome back! You haven't tried today's special made just for you!
+      audio: recommendations/returning_customer
+    loyal_customer:
+      text: You are special!
+      audio: recommendations/loyal_customer
+```
+
+orders_controller.rb:
+
+```Ruby
+class OrdersController < Adhearsion::CallController
+  def run
+    order = Order.new(user)
+    play order.recommendation
+  end
+end
+```
+
+order.rb:
+
+```Ruby
+class Order
+  def initialize(user)
+    @user = user
+  end
+
+  def recommendation
+    if @user.total_calls == 1
+      AdhearsionI18n.t('recommendations/new_customer')
+    elsif (@user.total_calls > 10) || (@user.total_purchases > 500)
+      AdhearsionI18n.t('recommendations/loyal_customer')
+    else
+      AdhearsionI18n.t('recommendations/returning_customer')
+    end
+  end
+end
+```
+
 ## String interpolations
 
 adhearsion-i18n supports string interpolations just as i18n itself does. However there are some guidelines we recommend:

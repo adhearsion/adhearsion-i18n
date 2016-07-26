@@ -1,5 +1,6 @@
 # develop
   * [FEATURE] Add rake task to generate Markdown formatted prompt list for recording
+  * [FEATURE] Expose translator as a library class method (`AdhearsionI18n.t`)
   * [BUGFIX] Fix rake task that validates recording files to handle nested i18n keys
 
 # v1.1.0
