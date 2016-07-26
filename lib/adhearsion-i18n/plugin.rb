@@ -74,9 +74,10 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
 
       desc "Generate recording script (Markdown format)"
       task :generate_script do
-        output_dir = File.join Adhearsion.root, 'doc'
-        File.mkdir output_dir unless File.exist? output_dir
+        @output_dir = File.join Adhearsion.root, 'doc'
+        File.mkdir @output_dir unless File.exist? @output_dir
 
+        seen_locales = Set.new
         locale_files = Dir.glob(I18n.load_path)
         locale_files.each do |locale_file|
           # We only support YAML for now
@@ -84,11 +85,10 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
 
           prompts = YAML.load File.read(locale_file)
 
-          locale = prompts.keys.first
+          seen_locales << locale = prompts.keys.first
           prompts = prompts[locale]
 
-          script_name = File.join output_dir, "prompts_#{locale}.md"
-          File.open script_name, 'w' do |fh|
+          File.open script_name(locale), 'w+' do |fh|
             each_prompt(prompts) do |key, mapping|
               logger.trace "Checking i18n key #{key}"
 
@@ -100,13 +100,21 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
               fh.puts
             end
           end
-          if File.zero? script_name
+
+        end
+
+        seen_locales.each do |locale|
+          if File.zero? script_name(locale)
             logger.warn "No prompts found, script not created."
-            File.unlink script_name
+            File.unlink script_name(locale)
           else
-            logger.info "Audio recording script written to #{script_name}"
+            logger.info "Audio recording script written to #{script_name(locale)}"
           end
         end
+      end
+
+      def script_name(locale)
+        File.join @output_dir, "prompts_#{locale}.md"
       end
 
       def children(node)
