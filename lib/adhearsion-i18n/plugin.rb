@@ -100,7 +100,12 @@ class AdhearsionI18n::Plugin < Adhearsion::Plugin
               fh.puts
             end
           end
-          File.unlink script_name if File.zero? script_name
+          if File.zero? script_name
+            logger.warn "No prompts found, script not created."
+            File.unlink script_name
+          else
+            logger.info "Audio recording script written to #{script_name}"
+          end
         end
       end
 
