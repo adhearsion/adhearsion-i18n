@@ -2,6 +2,7 @@
   * [FEATURE] Add rake task to generate Markdown formatted prompt list for recording
   * [FEATURE] Expose translator as a library class method (`AdhearsionI18n.t`)
   * [BUGFIX] Fix rake task that validates recording files to handle nested i18n keys
+  * [FEATURE] I18n now uses a formatter if specified by overriding output_formatter
 
 # v1.1.0
   * [FEATURE] Add fallback config option to disable text fallback when audio prompts exist.
